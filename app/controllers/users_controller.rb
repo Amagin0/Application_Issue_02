@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :ensure_correct_user, only: [:edit,:update]
+  before_action :ensure_correct_user, only: [:edit,:update,:following,:followers]
 
   def show
     @user = User.find(params[:id])
@@ -26,6 +26,16 @@ class UsersController < ApplicationController
       render "edit"
     end
   end
+  
+  #フォロー機能
+  def following
+    @user = User.find(params[:id])
+  end
+  
+  def followed
+    @user = User.find(params[:id])
+  end
+  
 
   private
   def user_params
@@ -38,5 +48,6 @@ class UsersController < ApplicationController
       redirect_to user_path(current_user)
     end
   end
+  
 end
 
