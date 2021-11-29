@@ -1,6 +1,6 @@
 class BookCommentsController < ApplicationController
   before_action :authenticate_user!
-  
+
   def create
     @book = Book.find(params[:book_id])
     @book_comment = BookComment.new(book_comment_params)
@@ -12,16 +12,16 @@ class BookCommentsController < ApplicationController
     end
       #book_comments/create.js.erbを読み込む
   end
-  
+
   def destroy
     @book = Book.find(params[:book_id])
     book_comment = @book.book_comments.find(params[:id])
     book_comment.destroy
     #book_comments/destroy.js.erbを読み込む
   end
-  
+
   def book_comment_params
     params.require(:book_comment).permit(:comment)
   end
-  
+
 end
