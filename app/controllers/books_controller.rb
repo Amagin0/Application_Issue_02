@@ -8,14 +8,8 @@ class BooksController < ApplicationController
   end
 
   def index
-    @books = Book.all
     @book = Book.new
-    to = Time.current.at_beginning_of_day
-    from = (to - 7.day)
-    @books = Book.includes(:favorites).sort {|a,b|
-      b.favorites.where(created_at: from...to).size<=>
-      a.favorites.where(created_at: from...to).size
-    }
+    @books = Book.left_joins(:week_favorites).group(:id).order(Arel.sql('count(book_id) desc'))
   end
 
   def create
