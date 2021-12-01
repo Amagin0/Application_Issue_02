@@ -9,6 +9,50 @@
     <div class='col-md-8 offset-md-1'>
       <h2>Books</h2>
       <%= render 'books/index',books: @books %>
+
+      <h2>投稿数の前日比・前週比</h2>
+      <table border="1" frame="box" cellpadding="5" width="90%">
+        <tr>
+          <td><strong>今日の投稿数</strong></td>
+          <td><strong>前日の投稿数</strong></td>
+          <td><strong>前日比</strong></td>
+        </tr>
+        <tr>
+          <td><%= @today_book.count %></td>
+          <td><%= @yesterday_book.count %></td>
+          <td>
+            <% unless @yesterday_book.count == 0 %>
+              <% @the_day_before = @today_book.count / @yesterday_book.count.to_f %>
+              <%= (@the_day_before * 100).round %>
+            <% else %>
+              前日の投稿がありません
+            <% end %>
+          </td>
+        </tr>
+      </table>
+      <br>
+      <table border="1" frame="box" cellpadding="5" width="90%">
+        <tr>
+          <td><strong>今週の投稿数</strong></td>
+          <td><strong>前週の投稿数</strong></td>
+          <td><strong>前週比</strong></td>
+        </tr>
+        <tr>
+          <td><%= @oneweek_book.count %></td>
+          <td><%= @oneweek_ago_book.count %></td>
+          <td>
+            <% unless @oneweek_ago_book.count == 0 %>
+              <% @the_week_before = @oneweek_book.count / @oneweek_ago_book.count.to_f %>
+              <%= (@the_week_before * 100).round %>
+            <% else %>
+              前週の投稿がありません
+            <% end %></td>
+        </tr>
+      </table>
+
+
+
+    </div>
     </div>
   </div>
 </div>

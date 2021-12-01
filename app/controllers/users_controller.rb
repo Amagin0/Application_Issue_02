@@ -6,6 +6,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @books = @user.books
     @book = Book.new
+    @today_book = @books.create_today
+    @yesterday_book = @books.create_yesterday
+    @oneweek_book = @books.create_one_week
+    @oneweek_ago_book = @books.create_one_week_ago
     
     if user_signed_in?
       @currentUserEntry = UserRoom.where(user_id: current_user.id)
