@@ -1,0 +1,20 @@
+<div class="chat-room">
+  <% @Roommates.each do |r| %>
+    <div class="roommate-name">
+      <h2><%= r.user.name %>さんとのチャット</h2>
+    </div>
+  <% end %>
+
+  <div class="chat">
+    <% @messages.each do |m| %>
+      <%= m.text %>
+    <% end %>
+  </div>
+
+  <div class="posts">
+    <%= form_with @message, remote: true do |f| %>
+      <%= f.text_field :text %>
+    <% end %>
+  </div>
+
+</div>

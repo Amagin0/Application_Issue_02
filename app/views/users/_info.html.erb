@@ -8,7 +8,7 @@
 	  <th>introduction</th>
 	  <th><%= user.introduction %></th>
   </tr>
-  
+
   <!--#フォロ機能追加-->
   <tr>
     <th>follows</th>
@@ -29,6 +29,10 @@
     <% end %>
   <% else %>
     <%= link_to '',edit_user_path(user), class: "btn btn-outline-secondary btn-block fas fa-user-cog edit_user_#{user.id}" %>
+  <% end %>
+
+  <% if current_user != user && user.following?(current_user) && current_user.following?(user) %>
+    <%= link_to "chatをはじめる", chat_path(user.id) %>
   <% end %>
 </div>
 
