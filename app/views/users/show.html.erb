@@ -10,28 +10,96 @@
       <h2>Books</h2>
       <%= render 'books/index',books: @books %>
 
+      <h2>7日間分の投稿数</h2>
+      <div class="table_width">
+        <table class="table table-bordered" >
+          <tr>
+            <td>6日前</td>
+            <td>5日前</td>
+            <td>4日前</td>
+            <td>3日前</td>
+            <td>2日前</td>
+            <td>1日前</td>
+            <td>今日</td>
+          </tr>
+          <tr>
+            <td><%= @six_days_ago_book.count %></td>
+            <td><%= @five_days_ago_book.count %></td>
+            <td><%= @four_days_ago_book.count %></td>
+            <td><%= @three_days_ago_book.count %></td>
+            <td><%= @two_days_ago_book.count %></td>
+            <td><%= @yesterday_book.count %></td>
+            <td><%= @today_book.count %></td>
+          </tr>
+        </table>
+      </div>
+
+    <div>
+      <canvas id="myLineChart"></canvas>
+      <script>
+        $(document).on('turbolinks:load', function() {
+        var ctx = document.getElementById("myLineChart");
+        var myLineChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: ['6日前', '5日前', '4日前', '3日前', '2日前', '1日前', '今日'],
+            datasets: [{
+              label: "投稿した本の数",
+              data: [<%= @six_days_ago_book.count %>, <%= @five_days_ago_book.count %>, <%= @four_days_ago_book.count %>,
+                     <%= @three_days_ago_book.count %>, <%= @two_days_ago_book.count %>, <%= @yesterday_book.count %>, <%= @today_book.count %>],
+              backgroundColor: 'rgba(0, 0, 0, 0)',
+              borderColor: 'rgba(0, 80, 255, 1)',
+            }
+          ],
+        },
+        options: {
+          title: {
+            display: true,
+            text: '7日間の投稿数の比較'
+          },
+          scales: {
+            yAxes: [{
+              ticks: {
+              suggestedMax: 10,
+              suggestedMin: 0,
+              stepSize: 1,
+              callback: function(value, index, values){
+                return value
+                    }
+                  }
+                }]
+              },
+            }
+          });
+        });
+      </script>
+    </div>
+
       <h2>投稿数の前日比・前週比</h2>
-      <table border="1" frame="box" cellpadding="5" width="90%">
-        <tr>
-          <td><strong>今日の投稿数</strong></td>
-          <td><strong>前日の投稿数</strong></td>
-          <td><strong>前日比</strong></td>
-        </tr>
-        <tr>
-          <td><%= @today_book.count %></td>
-          <td><%= @yesterday_book.count %></td>
-          <td>
-            <% unless @yesterday_book.count == 0 %>
-              <% @the_day_before = @today_book.count / @yesterday_book.count.to_f %>
-              <%= (@the_day_before * 100).round %>
-            <% else %>
-              前日の投稿がありません
-            <% end %>
-          </td>
-        </tr>
-      </table>
+      <div class="table_width">
+        <table class="table table-bordered" >
+          <tr>
+            <td><strong>今日の投稿数</strong></td>
+            <td><strong>前日の投稿数</strong></td>
+            <td><strong>前日比</strong></td>
+          </tr>
+          <tr>
+            <td><%= @today_book.count %></td>
+            <td><%= @yesterday_book.count %></td>
+            <td>
+              <% unless @yesterday_book.count == 0 %>
+                <% @the_day_before = @today_book.count / @yesterday_book.count.to_f %>
+                <%= (@the_day_before * 100).round %>%
+              <% else %>
+                前日の投稿がありません
+              <% end %>
+            </td>
+          </tr>
+        </table>
+      </div>
       <br>
-      <table border="1" frame="box" cellpadding="5" width="90%">
+      <div class="table_width">
+        <table class="table table-bordered" >
         <tr>
           <td><strong>今週の投稿数</strong></td>
           <td><strong>前週の投稿数</strong></td>
@@ -43,12 +111,13 @@
           <td>
             <% unless @oneweek_ago_book.count == 0 %>
               <% @the_week_before = @oneweek_book.count / @oneweek_ago_book.count.to_f %>
-              <%= (@the_week_before * 100).round %>
+              <%= (@the_week_before * 100).round %>%
             <% else %>
               前週の投稿がありません
             <% end %></td>
         </tr>
-      </table>
+        </table>
+      </div>
 
 
 

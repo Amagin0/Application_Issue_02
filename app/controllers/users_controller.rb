@@ -8,8 +8,14 @@ class UsersController < ApplicationController
     @book = Book.new
     @today_book = @books.create_today
     @yesterday_book = @books.create_yesterday
+    @two_days_ago_book = @books.create_two_days_ago
+    @three_days_ago_book = @books.create_three_days_ago
+    @four_days_ago_book = @books.create_four_days_ago
+    @five_days_ago_book = @books.create_five_days_ago
+    @six_days_ago_book = @books.create_six_days_ago
     @oneweek_book = @books.create_one_week
     @oneweek_ago_book = @books.create_one_week_ago
+
     
     if user_signed_in?
       @currentUserEntry = UserRoom.where(user_id: current_user.id)

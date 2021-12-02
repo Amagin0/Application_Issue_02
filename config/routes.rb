@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'charts/index'
+  get 'chart/index'
   devise_for :users
   resources :users,only: [:show,:index,:edit,:update] do
       resource :relationships, only: [:create, :destroy]
