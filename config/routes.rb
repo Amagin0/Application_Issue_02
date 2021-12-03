@@ -14,9 +14,11 @@ Rails.application.routes.draw do
     resources :book_comments, only: [:create, :destroy]
   end
 
+  resources :chats, only: [:create]
+  resources :groups, except: [:destroy]
+
   root to: "homes#top"
   get 'home/about' => 'homes#about'
   get '/search' => 'searches#search'
   get 'chat/:id' =>'chats#show', as: 'chat'
-  resources :chats, only: [:create]
 end

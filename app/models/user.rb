@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-         
+
   is_impressionable counter_cache: true
 
   has_many :books, dependent: :destroy
@@ -12,6 +12,8 @@ class User < ApplicationRecord
 
   has_many :user_rooms, dependent: :destroy
   has_many :chats, dependent: :destroy
+  has_many :group_users, dependent: :destroy
+  has_many :groups, through: :group_users
 
   #自分がフォローされている(passive_relationships, followered_id, followers)
   has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
