@@ -16,7 +16,7 @@ class UsersController < ApplicationController
     @oneweek_book = @books.create_one_week
     @oneweek_ago_book = @books.create_one_week_ago
 
-    
+
     if user_signed_in?
       @currentUserEntry = UserRoom.where(user_id: current_user.id)
       @userEntry = UserRoom.where(user_id: @user.id)
@@ -55,7 +55,19 @@ class UsersController < ApplicationController
       render "edit"
     end
   end
-  
+
+  def search
+    @user = User.find(params[:user_id])
+    @books = @user.books
+    @book = Book.new
+    if params[:created_at] == ""
+      @search_book = "日付を選択してください"
+    else
+      create_at = params[:created_at]
+      @search_book = @books.where(['created_at LIKE?', "#{create_at}%"]).count
+    end
+  end
+
   private
   def user_params
     params.require(:user).permit(:name, :introduction, :profile_image)
@@ -67,6 +79,6 @@ class UsersController < ApplicationController
       redirect_to user_path(current_user)
     end
   end
-  
+
 end
 
