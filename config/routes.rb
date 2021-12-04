@@ -15,7 +15,9 @@ Rails.application.routes.draw do
   end
 
   resources :chats, only: [:create]
-  resources :groups, except: [:destroy]
+  resources :groups do
+    get "join" => "groups#join"
+  end
 
   root to: "homes#top"
   get 'home/about' => 'homes#about'
