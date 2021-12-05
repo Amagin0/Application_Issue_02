@@ -21,6 +21,8 @@ class Book < ApplicationRecord
 	scope :create_one_week, -> { where(created_at: 6.day.ago.beginning_of_day..Time.zone.now.end_of_day) }
 	scope :create_one_week_ago, -> { where(created_at: 2.week.ago.beginning_of_day..1.week.ago.end_of_day) }
 
+	scope :latest, -> { order(updated_at: :desc)}
+	scope :top_rate, -> {order(rate: :desc)}
 	validates :title, presence: true
 	validates :body, presence: true, length: {maximum: 200}
 	validates :rate, numericality: {

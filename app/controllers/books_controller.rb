@@ -12,6 +12,13 @@ class BooksController < ApplicationController
   def index
     @book = Book.new
     @books = Book.left_joins(:week_favorites).group(:id).order(Arel.sql('count(book_id) desc'))
+    if params[:sort_update]
+      @books = Book.latest
+    elsif params[:sort_top_rate]
+      @books = Book.top_rate
+    else
+      @books = Book.all
+    end
   end
 
   def create
