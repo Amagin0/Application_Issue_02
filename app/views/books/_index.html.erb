@@ -27,9 +27,17 @@
           閲覧数：<%= book.impressionist_count(:filter => :session_hash) %>
         </td>
 
+        <td class="book-rate" data-score="<%= book.rate %>"></td>
       </tr>
     <% end %>
-
-
   </tbody>
 </table>
+<script>
+    $('.book-rate').raty({
+      readOnly: true,
+      score: function() {
+        return $(this).attr('data-score');
+      },
+      path: '/assets/'
+    });
+</script>

@@ -13,6 +13,7 @@
 //= require chartkick
 //= require Chart.bundle
 //= require jquery3
+//= require jquery.raty.js
 //= require popper
 //= require bootstrap-sprockets
 //= require rails-ujs
