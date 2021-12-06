@@ -11,6 +11,7 @@ class BooksController < ApplicationController
 
   def index
     @book = Book.new
+    @books = Book.all.order(params[:sort])
     @books = Book.left_joins(:week_favorites).group(:id).order(Arel.sql('count(book_id) desc'))
     if params[:sort_update]
       @books = Book.latest
@@ -51,7 +52,7 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :body, :rate)
+    params.require(:book).permit(:title, :body, :rate, :category)
   end
 
   def ensure_correct_user

@@ -4,4 +4,10 @@ class HomesController < ApplicationController
 
   def about
   end
+
+  def search
+    @book = Book.new
+    @books = Book.search(params[:tag])
+  end
+
 end
